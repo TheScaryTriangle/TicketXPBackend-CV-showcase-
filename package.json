@@ -1,0 +1,29 @@
+{
+  "name": "ticketxpbackend-cv-showcase-",
+  "version": "1.0.0",
+  "description": "Package for TicketXP backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "ls",
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  }, 
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheScaryTriangle/TicketXPBackend-CV-showcase-.git"
+  },
+  "author": "TheScaryTriangle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheScaryTriangle/TicketXPBackend-CV-showcase-/issues"
+  },
+  "homepage": "https://github.com/TheScaryTriangle/TicketXPBackend-CV-showcase-#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+  
+}
