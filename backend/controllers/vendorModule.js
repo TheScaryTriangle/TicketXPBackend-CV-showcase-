@@ -1,5 +1,4 @@
 const asyncHandler = require('express-async-handler');
-const vendorTable = require('../models/vendorModel');
 const vendorModel = require('../models/vendorModel');
 
 /**
@@ -7,33 +6,50 @@ const vendorModel = require('../models/vendorModel');
  * @param {*} res 
  */
 const getVendors = asyncHandler(async (req, res) => {
-    const vendors = await vendorTable.find();
+    const vendors = await vendorModel.find();
     res.status(200).json(vendors)
 })
 
+/**
+ * @dev This adds a new vendor to the DB
+ * @params Takes a object in the body
+ */
 const addVendor = asyncHandler(async (req, res) => {
-    if (!req.body.text) {
+    const { VendorName, VendorID, IsActive, VendorDescription } = req.body;
+
+    if (!VendorName || !VendorID) {
         res.status(400);
-        throw new Error('Please add text field');
+        throw new Error('Please provide VendorName and VendorID');
     }
 
-    const addVendorRequest = await vendorTable.create({
-        text: req.body.text,
-    });
 
-    res.status(200).json({
-        text: addVendorRequest
-    })
-})
+    try {
+        const addVendorRequest = await vendorModel.create({
+            VendorName,
+            VendorID,
+            VendorDescription,
+            IsActive,
+        });
+        console.log(addVendorRequest)
+
+        res.status(200).json({
+            Vendor: addVendorRequest,
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: 'Error adding the vendor' });
+    }
+});
+
 
 const getVendorById = asyncHandler(async (req, res) => {
-    const vendorFromDb = await vendorTable.findById(req.body.id);
+    const vendorFromDb = await vendorModel.findById(req.body.id);
     res.status(200).json(vendorFromDb);
 })
 
 const updateVendor = asyncHandler(async (req, res) => {
     console.log(req.body.id)
-    const vendorFromDb = await vendorTable.findById(req.body.id);
+    const vendorFromDb = await vendorModel.findById(req.body.id);
     res.status(200).json(vendorFromDb);
 
     if (!vendorFromDb) {
@@ -41,7 +57,7 @@ const updateVendor = asyncHandler(async (req, res) => {
         throw new Error('Vendor not found');
     }
 
-    const updatedVendor = await vendorTable.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedVendor = await vendorModel.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
     });
 
@@ -51,7 +67,7 @@ const updateVendor = asyncHandler(async (req, res) => {
 const deleteVendor = asyncHandler(async (req, res) => {
     const vendorId = req.body.id; // Assuming the ID is in the URL parameters
     try {
-        const deletedVendor = await vendorTable.findByIdAndDelete(vendorId);
+        const deletedVendor = await vendorModel.findByIdAndDelete(vendorId);
 
         if (!deletedVendor) {
             res.status(404).json({ message: 'Vendor not found' });

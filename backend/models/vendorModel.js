@@ -1,10 +1,22 @@
 const mongoose = require('mongoose');
 
-const addVendorSchema = mongoose.Schema(
+const vendorSchema = new mongoose.Schema(
   {
-    text: {
+    VendorName: {
       type: String,
-      required: [true, 'Please add a text value'],
+      required: true,
+    },
+    VendorID: {
+      type: String,
+      required: true,
+    },
+    VendorDescription: {
+      type: String,
+      required: true,
+    },
+    IsActive: {
+      type: Boolean,
+      default: true,
     },
   },
   {
@@ -12,4 +24,4 @@ const addVendorSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Vendor', addVendorSchema);
+module.exports = mongoose.model('Vendor', vendorSchema);
