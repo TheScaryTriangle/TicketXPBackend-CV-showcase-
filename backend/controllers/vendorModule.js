@@ -12,11 +12,18 @@ const getVendors = asyncHandler(async (req, res) => {
 
 /**
  * @dev This adds a new vendor to the DB
- * @params Takes a object in the body
+ * @params Takes a object in the body, this is the request object
+ * {
+ *  VendorName: "",
+ *  VendorId: "",
+ *  IsActive: true,
+ *  VendorDescription: "",
+ * }
+ * @todo Add the rest of the object see Backend documentation for refrence
  */
 const addVendor = asyncHandler(async (req, res) => {
     const { VendorName, VendorID, IsActive, VendorDescription } = req.body;
-
+    
     if (!VendorName || !VendorID) {
         res.status(400);
         throw new Error('Please provide VendorName and VendorID');
@@ -41,12 +48,19 @@ const addVendor = asyncHandler(async (req, res) => {
     }
 });
 
-
+/**
+ * @dev This is used to get a single vendor from their vendor Id
+ * @notice The vendor Id is not the one assigned by the user but the primary key assigned by the DB
+ * @param id The Id of the Vendor
+ */
 const getVendorById = asyncHandler(async (req, res) => {
     const vendorFromDb = await vendorModel.findById(req.body.id);
     res.status(200).json(vendorFromDb);
 })
 
+/**
+ * @dev This updates an existing vendor
+ */
 const updateVendor = asyncHandler(async (req, res) => {
     console.log(req.body.id)
     const vendorFromDb = await vendorModel.findById(req.body.id);

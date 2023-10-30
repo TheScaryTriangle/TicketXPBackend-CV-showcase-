@@ -8,15 +8,15 @@ const eventSchema = new mongoose.Schema(
     },
     EventID: {
       type: String,
-      required: true,
+      // required: true,
     },
     EventDetails: {
       type: String,
-      required: true,
+      // required: true,
     },
     VendorID: {
       type: String,
-      required: true,
+      // required: true,
     },
     IsActive: {
       type: Boolean,
@@ -24,15 +24,15 @@ const eventSchema = new mongoose.Schema(
     },
     EndOfSale: {
       type: Date,
-      required: true,
+      // required: true,
     },
     EventDate: {
       type: Date,
-      required: true,
+      // required: true,
     },
     TicketPrice: {
       type: Number,
-      required: true,
+      // required: true,
     },
   },
   {
