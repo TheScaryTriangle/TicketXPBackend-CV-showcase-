@@ -37,8 +37,18 @@ const deleteEvent = asyncHandler(async (req, res) => {
     }
 })
 
+const getEventByID = asyncHandler(async (req, res) => {
+    try {
+        const eventFromDB = await ticketModel.findById(req.body.id);
+        res.status(200).json(eventFromDB);
+    } catch (error) {
+        res.status(500).json({ message: 'Error finding the event' });
+    }
+})
+
 module.exports = {
     getAllEvents,
     addEvent,
-    deleteEvent
+    deleteEvent,
+    getEventByID
 }
