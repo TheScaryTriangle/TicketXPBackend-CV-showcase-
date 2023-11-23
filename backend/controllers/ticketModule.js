@@ -1,24 +1,52 @@
 const asyncHandler = require('express-async-handler');
 const ticketModel = require('../models/ticketModel');
+const web3 = require('web3')
 
+/**
+ * @dev This gets all of the events from the database
+ * @dev Don't use this directly to return all events process this data first
+ */
 const getAllEvents = asyncHandler(async (req, res) => {
     const events = await ticketModel.find();
-    res.status(200).json(events)
+    return events
 })
+
+/**
+ * @dev This returns just the events that are still avaible to purchase
+ */
+const getAllAvalibleEvents = asyncHandler(async (req, res) => {
+    const events = await getAllEvents(req,res)
+    console.log(events)
+    const currentDate = new Date(); 
+
+    // Filter events where EndOfSale date is after or equal to the current date
+    const validEvents = events.filter(event => {
+      const endOfSaleDate = new Date(event.EndOfSale);
+      return endOfSaleDate >= currentDate;
+    });
+  
+    res.status(200).json(validEvents)
+})
+
 
 const addEvent = asyncHandler(async (req, res) => {
     const request = req.body;
-    console.log({ request })
     try {
         const addEventRequest = await ticketModel.create(request);
-        console.log(addEventRequest)
 
         res.status(200).json({
-            Vendor: addEventRequest,
+            data: addEventRequest,
+            message: 'Event added',
+            status: 200,
+            success: true,
         });
     } catch (error) {
         console.log(error)
-        res.status(500).json({ message: 'Error adding the event' });
+        res.status(500).json({
+            message: 'Error adding the event',
+            status: 500,
+            success: falses,
+        });
     }
 })
 
@@ -48,6 +76,7 @@ const getEventByID = asyncHandler(async (req, res) => {
 
 module.exports = {
     getAllEvents,
+    getAllAvalibleEvents,
     addEvent,
     deleteEvent,
     getEventByID

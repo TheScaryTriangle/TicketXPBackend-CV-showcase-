@@ -34,6 +34,18 @@ const eventSchema = new mongoose.Schema(
       type: Number,
       // required: true,
     },
+    ContractAddress: {
+      type: String,
+      // required: true,
+    },
+    IsApproved:{
+      type:Boolean,
+      // required: true,
+    },
+    IsOnContract:{
+      type:Boolean,
+      // required: true,
+    },
   },
   {
     timestamps: true,
