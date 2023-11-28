@@ -12,13 +12,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 const corsOptions = {
-  origin: 'http://localhost:3000', 
+  origin: [
+    'http://localhost:3000',
+    'http://192.168.1.228:8081'
+  ]
 };
 
 app.use(cors(corsOptions));
 
 app.use('/api/vendorModule', require('./routes/vendorRoutes'));
 app.use('/api/ticketModule', require('./routes/ticketRoutes'));
+app.use('/api/qrModule', require('./routes/qrRoute'));
+
 app.use(errorHandler);
 
 app.listen(port, () => {
