@@ -11,6 +11,16 @@ const getVendors = asyncHandler(async (req, res) => {
 })
 
 /**
+ * @dev This is used to get a single vendor from their vendor Id
+ * @notice The vendor Id is not the one assigned by the user but the primary key assigned by the DB
+ * @param id The Id of the Vendor
+ */
+const getVendorById = asyncHandler(async (req, res) => {
+    const vendorFromDb = await vendorModel.findById(req.body.id);
+    res.status(200).json(vendorFromDb);
+})
+
+/**
  * @dev This adds a new vendor to the DB
  * @params Takes a object in the body, this is the request object
  * {
@@ -48,15 +58,6 @@ const addVendor = asyncHandler(async (req, res) => {
     }
 });
 
-/**
- * @dev This is used to get a single vendor from their vendor Id
- * @notice The vendor Id is not the one assigned by the user but the primary key assigned by the DB
- * @param id The Id of the Vendor
- */
-const getVendorById = asyncHandler(async (req, res) => {
-    const vendorFromDb = await vendorModel.findById(req.body.id);
-    res.status(200).json(vendorFromDb);
-})
 
 /**
  * @dev This updates an existing vendor

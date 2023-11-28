@@ -1,50 +1,26 @@
 const mongoose = require('mongoose');
 
-const eventSchema = new mongoose.Schema(
+const ticketSchema = new mongoose.Schema(
   {
-    EventName: {
+    TicketId: {
       type: String,
       required: true,
     },
-    EventID: {
+    EventId: {
       type: String,
-      // required: true,
+      required: true,
     },
-    EventDetails: {
+    VendorId: {
       type: String,
-      // required: true,
+      required: true,
     },
-    VendorID: {
-      type: String,
-      // required: true,
+    IsValid: {
+      type: Boolean,
+      required: true,
     },
     IsActive: {
       type: Boolean,
-      default: true,
-    },
-    EndOfSale: {
-      type: Date,
-      // required: true,
-    },
-    EventDate: {
-      type: Date,
-      // required: true,
-    },
-    TicketPrice: {
-      type: Number,
-      // required: true,
-    },
-    ContractAddress: {
-      type: String,
-      // required: true,
-    },
-    IsApproved:{
-      type:Boolean,
-      // required: true,
-    },
-    IsOnContract:{
-      type:Boolean,
-      // required: true,
+      required: true,
     },
   },
   {
@@ -52,4 +28,4 @@ const eventSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Event', eventSchema);
+module.exports = mongoose.model('Ticket', ticketSchema);

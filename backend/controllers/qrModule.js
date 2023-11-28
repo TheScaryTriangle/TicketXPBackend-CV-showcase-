@@ -18,6 +18,9 @@ const generateQR = asyncHandler(async (req, res) => {
   res.status(200).json(QRReturn);
 })
 
+/**
+ * @dev This returns to the Vendor if the ticket is valid or not
+ */
 const scanQR = asyncHandler(async (req, res) => {
   const encryptedText = req.body.ticket
   const ticketData = decryptText(encryptedText)
@@ -43,6 +46,9 @@ function encryptText(plainText) {
   return encryptedData.toString('base64'); // Return as base64-encoded string
 }
 
+/**
+ * @dev This decrypts the encrypted text
+ */
 function decryptText(encryptedText) {
   const privateKey = fs.readFileSync('backend/controllers/private_key.pem', 'utf8');
   const decryptedData = crypto.privateDecrypt({
