@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'http://192.168.1.228:8081' // This is NGROK
+    'https://dee0-37-203-152-77.ngrok-free.app' // This is NGROK
   ]
 };
 

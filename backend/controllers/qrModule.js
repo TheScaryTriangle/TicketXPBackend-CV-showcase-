@@ -2,20 +2,31 @@ const fs = require('fs')
 const QRCode = require('qrcode');
 const asyncHandler = require('express-async-handler');
 const crypto = require("crypto")
+const { getEventByIDInternal } = require('../controllers/eventModule')
 
 /**
  * @dev This generates and returns a QR code as an SVG
  * @todo Put the correct text to encrypt
  */
 const generateQR = asyncHandler(async (req, res) => {
-  const ticketData = encryptText("TestTicket");
-  const QRReturn = QRCode.toString(ticketData.toString(), {
+  const ticketData = await getEventByIDInternal("654b8f1c34ac73d48a0d7838")
+  const stringToEncrypt = JSON.stringify({ 
+    eventName: ticketData.EventName ,
+    id: ticketData._id,
+    isValid: ticketData.isActive
+  });
+  
+  const encryptedText = encryptText(stringToEncrypt);
+  console.log(stringToEncrypt)
+
+  const QRSVG = QRCode.toString(encryptedText.toString(), {
     errorCorrectionLevel: 'L',
     type: 'svg'
   }, function (err) {
     if (err) throw err;
   });
-  res.status(200).json(QRReturn);
+
+  res.status(200).json({ QRSVG, ticketData });
 })
 
 /**

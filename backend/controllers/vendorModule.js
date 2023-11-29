@@ -58,6 +58,10 @@ const addVendor = asyncHandler(async (req, res) => {
     }
 });
 
+const validateVendor = asyncHandler(async (req,res) => {
+
+});
+
 
 /**
  * @dev This updates an existing vendor

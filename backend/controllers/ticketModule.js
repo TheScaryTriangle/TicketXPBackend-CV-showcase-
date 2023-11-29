@@ -8,50 +8,44 @@ const web3 = require('web3')
  */
 const getAllTickets = asyncHandler(async (req, res) => {
     const tickets = await ticketModel.find();
-    return tickets
+    // return tickets
+    res.status(200).json(tickets);
 })
+
 
 const addTicket = asyncHandler(async (req, res) => {
     const requestData = req.body;
     console.log(requestData)
-    res.status(200).json(requestData)
 
     try {
-        const addVendorRequest = await vendorModel.create({
-            VendorName,
-            VendorID,
-            VendorDescription,
-            IsActive,
-        });
-        console.log(addVendorRequest)
+        const addTicketRequest = await ticketModel.create(
+            requestData
+        );
+        console.log(addTicketRequest)
 
         res.status(200).json({
-            Vendor: addVendorRequest,
+            Ticket: addTicketRequest,
         });
     } catch (error) {
         console.log(error)
-        res.status(500).json({ message: 'Error adding the vendor' });
+        res.status(500).json({ message: 'Error adding the Ticket' });
     }
 });
 
-/**
- * @dev This returns just the events that are still avaible to purchase
- */
-const getAllAvalibleEvents = asyncHandler(async (req, res) => {
-    const events = await getAllEvents(req,res)
-    console.log(events)
-    const currentDate = new Date(); 
+const getTicketById = asyncHandler(async (req, res) => {
+    const tickets = await ticketModel.findById(req.body.id);
+    // return tickets
+    res.status(200).json(tickets);
+})
 
-    // Filter events where EndOfSale date is after or equal to the current date
-    const validEvents = events.filter(event => {
-      const endOfSaleDate = new Date(event.EndOfSale);
-      return endOfSaleDate >= currentDate;
-    });
-  
-    res.status(200).json(validEvents)
+const getTicketByIdInternal = asyncHandler(async (id) => {
+    const tickets = await ticketModel.findById(id);
+    return tickets;
 })
 
 module.exports = {
     getAllTickets,
     addTicket,
+    getTicketById,
+    getTicketByIdInternal
 }

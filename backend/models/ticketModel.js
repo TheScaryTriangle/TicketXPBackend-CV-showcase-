@@ -10,17 +10,20 @@ const ticketSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    EventName:{
+      type:String,
+    },
     VendorId: {
       type: String,
-      required: true,
+      // required: true,
     },
     IsValid: {
       type: Boolean,
-      required: true,
+      // required: true,
     },
     IsActive: {
-      type: Boolean,
-      required: true,
+      type: Boolean, 
+      // required: true,
     },
   },
   {

@@ -6,16 +6,21 @@ const web3 = require('web3')
  * @dev This gets all of the events from the database
  * @dev Don't use this directly to return all events process this data first
  */
-const getAllEvents = asyncHandler(async (req, res) => {
+const getAllEventsInternal = asyncHandler(async (req, res) => {
     const events = await ticketModel.find();
     return events
+})
+
+const getAllEvents = (async (req, res) => {
+    const events = await ticketModel.find();
+    res.status(200).json(events)
 })
 
 /**
  * @dev This returns just the events that are still avaible to purchase
  */
 const getAllAvalibleEvents = asyncHandler(async (req, res) => {
-    const events = await getAllEvents(req,res)
+    const events = await getAllEventsInternal(req,res)
     console.log(events)
     const currentDate = new Date(); 
 
