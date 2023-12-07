@@ -20,16 +20,16 @@ const getAllEvents = (async (req, res) => {
  * @dev This returns just the events that are still avaible to purchase
  */
 const getAllAvalibleEvents = asyncHandler(async (req, res) => {
-    const events = await getAllEventsInternal(req,res)
+    const events = await getAllEventsInternal(req, res)
     console.log(events)
-    const currentDate = new Date(); 
+    const currentDate = new Date();
 
     // Filter events where EndOfSale date is after or equal to the current date
     const validEvents = events.filter(event => {
-      const endOfSaleDate = new Date(event.EndOfSale);
-      return endOfSaleDate >= currentDate;
+        const endOfSaleDate = new Date(event.EndOfSale);
+        return endOfSaleDate >= currentDate;
     });
-  
+
     res.status(200).json(validEvents)
 })
 
@@ -79,7 +79,7 @@ const getEventByID = asyncHandler(async (req, res) => {
     }
 })
 
-const getEventByIDInternal =  asyncHandler(async (_eventId) => {
+const getEventByIDInternal = asyncHandler(async (_eventId) => {
     try {
         const eventFromDB = await ticketModel.findById(_eventId);
         return eventFromDB

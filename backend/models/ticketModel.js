@@ -10,6 +10,10 @@ const ticketSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    UserId:{
+      type: String,
+      required: true,
+    },
     EventName:{
       type:String,
     },
@@ -19,11 +23,11 @@ const ticketSchema = new mongoose.Schema(
     },
     IsValid: {
       type: Boolean,
-      // required: true,
+      required: true,
     },
     IsActive: {
       type: Boolean, 
-      // required: true,
+      required: true,
     },
   },
   {
